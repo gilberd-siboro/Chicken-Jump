@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lVz-K3-5lx">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Main Menu View Controller-->
+        <scene sceneID="Yj0-hW-RLD">
+            <objects>
+                <viewController id="lVz-K3-5lx" customClass="MainMenuViewController" customModule="Chicken_Jump" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gAn-XO-baP">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="square" translatesAutoresizingMaskIntoConstraints="NO" id="KIL-KU-1a6">
+                                <rect key="frame" x="-17" y="220" width="428" height="276"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chicken" translatesAutoresizingMaskIntoConstraints="NO" id="Qmp-gx-ZT1">
+                                <rect key="frame" x="-14" y="205" width="434" height="281"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text1" translatesAutoresizingMaskIntoConstraints="NO" id="tmv-vi-Mpk">
+                                <rect key="frame" x="28" y="71" width="351" height="201"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chicken2" translatesAutoresizingMaskIntoConstraints="NO" id="LAf-Sc-FJJ">
+                                <rect key="frame" x="267" y="59" width="112" height="130"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tutorial" translatesAutoresizingMaskIntoConstraints="NO" id="IVM-gv-1W6">
+                                <rect key="frame" x="77" y="664" width="240" height="62"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="0E7-qm-6R7" appends="YES" id="DVd-0Q-MMU"/>
+                                </connections>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="4dN-Jl-edt">
+                                <rect key="frame" x="128" y="593" width="139" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Wlz-My-fx4"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="XU9-aR-OIN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gPC-gj-z4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="0E7-qm-6R7">
+                    <connections>
+                        <segue destination="LBN-FW-pNW" kind="show" id="3fH-CD-bZ5"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="3.8167938931297707" y="-612.67605633802816"/>
+        </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="xBJ-lw-RCs">
+            <objects>
+                <viewController id="LBN-FW-pNW" customClass="TutorialViewController" customModule="Chicken_Jump" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="i0v-0B-yZW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tutorial" translatesAutoresizingMaskIntoConstraints="NO" id="2et-Yf-lYq">
+                                <rect key="frame" x="16" y="59" width="135" height="52"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text2" translatesAutoresizingMaskIntoConstraints="NO" id="rZC-aF-ZpM">
+                                <rect key="frame" x="112" y="143" width="281" height="161"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chicken3" translatesAutoresizingMaskIntoConstraints="NO" id="lay-4q-rQV">
+                                <rect key="frame" x="22" y="229" width="129" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="peraturan" translatesAutoresizingMaskIntoConstraints="NO" id="8Wy-lM-s9k">
+                                <rect key="frame" x="22" y="377" width="129" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text3" translatesAutoresizingMaskIntoConstraints="NO" id="NAb-5a-DQa">
+                                <rect key="frame" x="0.0" y="440" width="224" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text4" translatesAutoresizingMaskIntoConstraints="NO" id="nfO-tT-F7E">
+                                <rect key="frame" x="137" y="553" width="256" height="133"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chicken2" translatesAutoresizingMaskIntoConstraints="NO" id="g2J-PW-VRK">
+                                <rect key="frame" x="220" y="478" width="173" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="zIa-hL-oZe">
+                                <rect key="frame" x="291" y="69" width="102" height="33"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="EBw-sY-yPU" appends="YES" id="Bs5-9x-EPr"/>
+                                </connections>
+                            </imageView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="CYi-Sh-1SG"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="e35-bB-QyC"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PYf-yL-Diq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="EBw-sY-yPU">
+                    <connections>
+                        <action selector="goHomeButton:" destination="LBN-FW-pNW" id="2sH-SR-66c"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="800.76335877862596" y="-613.38028169014092"/>
+        </scene>
+        <!--Game View Controller-->
+        <scene sceneID="aHp-5d-s2P">
+            <objects>
+                <viewController id="0jh-lR-F4t" customClass="GameViewController" customModule="Chicken_Jump" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Kfl-83-2O4">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="vGb-8j-2fO"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uW5-X3-sZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1656" y="-613"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="back" width="592" height="294"/>
+        <image name="chicken" width="539" height="463"/>
+        <image name="chicken2" width="483" height="516"/>
+        <image name="chicken3" width="588" height="632"/>
+        <image name="peraturan" width="658" height="190"/>
+        <image name="play" width="700" height="336"/>
+        <image name="square" width="542" height="460"/>
+        <image name="text1" width="3580" height="1116"/>
+        <image name="text2" width="1120" height="848"/>
+        <image name="text3" width="1176" height="834"/>
+        <image name="text4" width="1084" height="802"/>
+        <image name="tutorial" width="1029" height="242"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
