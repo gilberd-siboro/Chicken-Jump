@@ -20,6 +20,8 @@
 		FDCF25292C2D3FD900538517 /* Chicken_JumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25282C2D3FD900538517 /* Chicken_JumpTests.swift */; };
 		FDCF25332C2D3FD900538517 /* Chicken_JumpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25322C2D3FD900538517 /* Chicken_JumpUITests.swift */; };
 		FDCF25352C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25342C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift */; };
+		FF6933322C33FD85006D9914 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6933312C33FD85006D9914 /* GameOverScene.sks */; };
+		FF6933342C33FDB4006D9914 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6933332C33FDB4006D9914 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,8 @@
 		FDCF252E2C2D3FD900538517 /* Chicken JumpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chicken JumpUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCF25322C2D3FD900538517 /* Chicken_JumpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chicken_JumpUITests.swift; sourceTree = "<group>"; };
 		FDCF25342C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chicken_JumpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FF6933312C33FD85006D9914 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
+		FF6933332C33FDB4006D9914 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +120,8 @@
 				FDCF251D2C2D3FD900538517 /* LaunchScreen.storyboard */,
 				FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */,
 				FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */,
+				FF6933312C33FD85006D9914 /* GameOverScene.sks */,
+				FF6933332C33FDB4006D9914 /* GameOverScene.swift */,
 			);
 			path = "Chicken Jump";
 			sourceTree = "<group>";
@@ -245,6 +251,7 @@
 				FDCF251A2C2D3FD900538517 /* Base in Resources */,
 				FDCF251C2C2D3FD900538517 /* Assets.xcassets in Resources */,
 				FDCF25132C2D3FD900538517 /* Actions.sks in Resources */,
+				FF6933322C33FD85006D9914 /* GameOverScene.sks in Resources */,
 				FDCF251F2C2D3FD900538517 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -274,6 +281,7 @@
 				FDCF25152C2D3FD900538517 /* GameScene.swift in Sources */,
 				FDA4F7172C2D46EC00B4C4D1 /* TutorialViewController.swift in Sources */,
 				FDCF25172C2D3FD900538517 /* GameViewController.swift in Sources */,
+				FF6933342C33FDB4006D9914 /* GameOverScene.swift in Sources */,
 				FDCF250F2C2D3FD900538517 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

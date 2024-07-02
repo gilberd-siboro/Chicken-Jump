@@ -15,8 +15,11 @@ class GameScene: SKScene {
     
     var pijakan: SKSpriteNode?
     var obstacle1: SKSpriteNode?
+    var hpLabel: SKLabelNode?
+
     var obstacle2: SKSpriteNode?
     var xPosition = [-150, 150]
+    var hp = "❤️❤️❤️"
     
     override func didMove(to view: SKView) {
         pijakan = childNode(withName: "//pijakan") as? SKSpriteNode
@@ -107,6 +110,43 @@ class GameScene: SKScene {
         let moveDownAction = SKAction.moveTo(y: -700, duration: 5)
         let removeNodeAction = SKAction.removeFromParent()
         node.run(SKAction.sequence([moveDownAction, removeNodeAction]))
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact){
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+        
+        // handle collision chicken & trap
+        if nodeA.name == "chicken2" && nodeB.name == "obstacel1"{
+            nodeB.removeFromParent()
+            
+            if nodeA.name == "chicken3" && nodeB.name == "obstacel1"{
+                nodeB.removeFromParent()
+                
+                if hp.count > 0 {
+                    hp.removeLast()
+                }
+                
+                // update hp label
+                hpLabel?.text = "\(hp)"
+                
+                if hp.count == 0 {
+                    showGameOver()
+                }
+            }
+        }
+        
+        func showGameOver(){
+            // transition to GameOverScene
+            if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
+                
+                gameOverScene.scaleMode = .aspectFill
+                gameOverScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+                let transition = SKTransition.reveal(with: .down, duration: 1)
+                
+                view?.presentScene(gameOverScene, transition: transition)
+            }
+        }
     }
 }
 
