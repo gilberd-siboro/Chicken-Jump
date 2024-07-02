@@ -10,9 +10,12 @@ import SpriteKit
 import GameplayKit
 
 class GameViewController: UIViewController {
-
+    override func loadView(){
+        self.view = SKView()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         if let view = self.view as! SKView? {
             // Load the SKScene from 'GameScene.sks'
