@@ -1,4 +1,4 @@
-//
+
 //  MainMenuViewController.swift
 //  Chicken Jump
 //
@@ -6,16 +6,35 @@
 //
 
 import UIKit
+import AVFoundation
+
 
 class MainMenuViewController: UIViewController {
 
+    @IBOutlet weak var muteButton: UIButton!
+    var isMute = false
+    
+    //cek music playernya tadi dibuat dimana
+    let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
-//    override var prefersStatusBarHidden: Bool {
+    @IBAction func changeMuteStatus(_ sender: Any) {
+        if !isMute{
+            muteButton.setImage(UIImage(systemName: "speaker.slash.circle.fill"), for: .normal)
+            isMute = true//mutebacksound
+            appDelegate.music?.stop()
+        }else {
+            muteButton.setImage(UIImage (systemName : "speaker.circle.fill"), for: .normal)
+            isMute = false
+            //music lanjut
+            appDelegate.music?.play()
+        }
+    }
+    //    override var prefersStatusBarHidden: Bool {
 //        return true
 //    }
     
