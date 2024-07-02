@@ -6,15 +6,30 @@
 //
 
 import UIKit
+import AVFoundation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var music: AVAudioPlayer? = {
+        //cara agar player taua, ngambil music dr mn
+        guard let musicLocation = Bundle.main.url(forResource: "Bgmusic", withExtension: "mpeg") else {
+            return nil
+        }
+        
+        let audioPlayer = try?
+        AVAudioPlayer(contentsOf: musicLocation)
+        audioPlayer?.numberOfLoops = -1
+        return audioPlayer
+    }()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        music?.play()
         return true
     }
 
@@ -37,4 +52,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 }
-
