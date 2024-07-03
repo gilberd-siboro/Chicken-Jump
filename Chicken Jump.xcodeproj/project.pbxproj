@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E37CEE192C35381D009EAFDA /* Bgmusic.mpeg in Resources */ = {isa = PBXBuildFile; fileRef = E37CEE182C35381D009EAFDA /* Bgmusic.mpeg */; };
 		FDA4F7152C2D45F500B4C4D1 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */; };
 		FDA4F7172C2D46EC00B4C4D1 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */; };
 		FDCF250F2C2D3FD900538517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF250E2C2D3FD900538517 /* AppDelegate.swift */; };
@@ -40,6 +41,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E37CEE182C35381D009EAFDA /* Bgmusic.mpeg */ = {isa = PBXFileReference; lastKnownFileType = video.mpeg; path = Bgmusic.mpeg; sourceTree = "<group>"; };
 		FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		FDCF250B2C2D3FD900538517 /* Chicken Jump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chicken Jump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +135,7 @@
 			children = (
 				FDCF25322C2D3FD900538517 /* Chicken_JumpUITests.swift */,
 				FDCF25342C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift */,
+				E37CEE182C35381D009EAFDA /* Bgmusic.mpeg */,
 			);
 			path = "Chicken JumpUITests";
 			sourceTree = "<group>";
@@ -244,6 +247,7 @@
 				FDCF25112C2D3FD900538517 /* GameScene.sks in Resources */,
 				FDCF251A2C2D3FD900538517 /* Base in Resources */,
 				FDCF251C2C2D3FD900538517 /* Assets.xcassets in Resources */,
+				E37CEE192C35381D009EAFDA /* Bgmusic.mpeg in Resources */,
 				FDCF25132C2D3FD900538517 /* Actions.sks in Resources */,
 				FDCF251F2C2D3FD900538517 /* Base in Resources */,
 			);
