@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="lVz-K3-5lx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="hc9-34-pcx">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
@@ -40,9 +40,13 @@
                                     <outletCollection property="gestureRecognizers" destination="0E7-qm-6R7" appends="YES" id="DVd-0Q-MMU"/>
                                 </connections>
                             </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="4dN-Jl-edt">
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play" translatesAutoresizingMaskIntoConstraints="NO" id="4dN-Jl-edt">
                                 <rect key="frame" x="128" y="593" width="139" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="gnx-r5-QRC" appends="YES" id="McF-rP-G08"/>
+                                </connections>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Wlz-My-fx4"/>
@@ -53,26 +57,27 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gPC-gj-z4V" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="0E7-qm-6R7">
                     <connections>
-                        <segue destination="LBN-FW-pNW" kind="show" id="3fH-CD-bZ5"/>
+                        <segue destination="LBN-FW-pNW" kind="show" id="6AH-ZZ-g3l"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <tapGestureRecognizer id="gnx-r5-QRC">
+                    <connections>
+                        <segue destination="0jh-lR-F4t" kind="show" id="fDR-e9-JqX"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3.8167938931297707" y="-612.67605633802816"/>
+            <point key="canvasLocation" x="930.53435114503804" y="-612.67605633802827"/>
         </scene>
         <!--Tutorial View Controller-->
         <scene sceneID="xBJ-lw-RCs">
             <objects>
                 <viewController id="LBN-FW-pNW" customClass="TutorialViewController" customModule="Chicken_Jump" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="i0v-0B-yZW">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="tutorial" translatesAutoresizingMaskIntoConstraints="NO" id="2et-Yf-lYq">
                                 <rect key="frame" x="16" y="59" width="135" height="52"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text2" translatesAutoresizingMaskIntoConstraints="NO" id="rZC-aF-ZpM">
-                                <rect key="frame" x="112" y="143" width="281" height="161"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="chicken3" translatesAutoresizingMaskIntoConstraints="NO" id="lay-4q-rQV">
@@ -95,12 +100,16 @@
                                 <rect key="frame" x="220" y="478" width="173" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="zIa-hL-oZe">
-                                <rect key="frame" x="291" y="69" width="102" height="33"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="text2" translatesAutoresizingMaskIntoConstraints="NO" id="rZC-aF-ZpM">
+                                <rect key="frame" x="125" y="83" width="281" height="161"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="ybL-YY-EG6">
+                                <rect key="frame" x="291" y="66" width="86" height="38"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <gestureRecognizers/>
                                 <connections>
-                                    <outletCollection property="gestureRecognizers" destination="EBw-sY-yPU" appends="YES" id="Bs5-9x-EPr"/>
+                                    <outletCollection property="gestureRecognizers" destination="Mac-7B-PqQ" appends="YES" id="Ani-Cl-h1k"/>
                                 </connections>
                             </imageView>
                         </subviews>
@@ -110,13 +119,13 @@
                     <navigationItem key="navigationItem" id="e35-bB-QyC"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PYf-yL-Diq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="EBw-sY-yPU">
+                <tapGestureRecognizer id="Mac-7B-PqQ">
                     <connections>
-                        <action selector="goHomeButton:" destination="LBN-FW-pNW" id="2sH-SR-66c"/>
+                        <action selector="goBack:" destination="LBN-FW-pNW" id="8qO-VI-hNr"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="800.76335877862596" y="-613.38028169014092"/>
+            <point key="canvasLocation" x="1727.4809160305342" y="-614.08450704225356"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="aHp-5d-s2P">
@@ -128,10 +137,28 @@
                         <viewLayoutGuide key="safeArea" id="vGb-8j-2fO"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
+                    <navigationItem key="navigationItem" id="Sic-1Z-Wbv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uW5-X3-sZ7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1656" y="-613"/>
+            <point key="canvasLocation" x="4" y="198"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2eN-o3-jX9">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="EYp-ro-OEa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="hc9-34-pcx" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QD0-Jw-3yx">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lVz-K3-5lx" kind="relationship" relationship="rootViewController" id="pai-e3-thS"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="3.8167938931297707" y="-612.67605633802827"/>
         </scene>
     </scenes>
     <resources>

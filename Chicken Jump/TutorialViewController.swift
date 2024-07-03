@@ -12,14 +12,27 @@ class TutorialViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.setHidesBackButton(true, animated: true)
 
         // Do any additional setup after loading the view.
+        
+        
     }
     
-    @IBAction func goHomeButton(_ sender: Any) {
-        dismiss(animated: true)
+    @IBAction func goBack(_ seqnder: Any) {
+        if let navigationController = self.navigationController {
+                    navigationController.popViewController(animated: true)
+                } else {
+                    dismiss(animated: true, completion: nil)
+                }
     }
     
+//    @IBAction func goHomeButton(_ sender: Any) {
+//    }
+//        @IBAction func goHomeButton(_ sender: Any) {
+//        dismiss(animated: true)
+//    }
+
     /*
     // MARK: - Navigation
 

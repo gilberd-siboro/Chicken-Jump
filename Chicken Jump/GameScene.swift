@@ -6,83 +6,141 @@
 //
 
 import SpriteKit
+import UIKit
 import GameplayKit
 
-class GameScene: SKScene {
-    
-    private var label : SKLabelNode?
-    private var spinnyNode : SKShapeNode?
+class GameScene: SKScene, SKPhysicsContactDelegate {
+    var chicken: SKSpriteNode?
+    var steps: [SKSpriteNode] = []
+    var bgPlay: SKSpriteNode?
+    var chickenPosition = 0 // Start at step1 (index 0)
     
     override func didMove(to view: SKView) {
+        physicsWorld.contactDelegate = self
         
-        // Get label node from scene and store it for use later
-        self.label = self.childNode(withName: "//helloLabel") as? SKLabelNode
-        if let label = self.label {
-            label.alpha = 0.0
-            label.run(SKAction.fadeIn(withDuration: 2.0))
+        chicken = self.childNode(withName: "//Chicken") as? SKSpriteNode
+        for i in 1...5 {
+            if let step = self.childNode(withName: "//Step\(i)") as? SKSpriteNode {
+                steps.append(step)
+            }
         }
         
-        // Create shape node to use during mouse interaction
-        let w = (self.size.width + self.size.height) * 0.05
-        self.spinnyNode = SKShapeNode.init(rectOf: CGSize.init(width: w, height: w), cornerRadius: w * 0.3)
+        // Set up physics body for chicken
+        chicken?.physicsBody = SKPhysicsBody(rectangleOf: chicken!.size)
+        chicken?.physicsBody?.affectedByGravity = true
+        chicken?.physicsBody?.categoryBitMask = 1
+        chicken?.physicsBody?.collisionBitMask = 2
+        chicken?.physicsBody?.contactTestBitMask = 2
+        chicken?.physicsBody?.allowsRotation = false
         
-        if let spinnyNode = self.spinnyNode {
-            spinnyNode.lineWidth = 2.5
+        // Set up physics bodies for steps
+        for step in steps {
+            step.physicsBody = SKPhysicsBody(rectangleOf: step.size)
+            step.physicsBody?.isDynamic = false
+            step.physicsBody?.categoryBitMask = 2
+            step.physicsBody?.collisionBitMask = 1
+            step.physicsBody?.contactTestBitMask = 1
+        }
+        
+        // Add swipe gestures
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeRight))
+        swipeRight.direction = .right
+        view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeLeft))
+        swipeLeft.direction = .left
+        view.addGestureRecognizer(swipeLeft)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(swipeUp))
+        swipeUp.direction = .up
+        view.addGestureRecognizer(swipeUp)
+    }
+    
+    @objc func swipeRight() {
+        if chickenPosition < steps.count - 1 {
+            chickenPosition += 1
+            jumpChicken(to: .right)
+        }
+    }
+    
+    @objc func swipeLeft() {
+        if chickenPosition < steps.count - 1 {
+            chickenPosition += 1
+            jumpChicken(to: .left)
+        }
+    }
+    
+    @objc func swipeUp(){
+        if chickenPosition < steps.count - 1 {
+            chickenPosition += 2
+            jumpChicken(to: .up)
+        }
+        
+    }
+    
+    enum Direction {
+        case left
+        case right
+        case up
+        
+    }
+    
+    func jumpChicken(to direction: Direction) {
+        guard let chicken = chicken else { return }
+        
+        let targetX: CGFloat
+        let targetY: CGFloat = 400 // Adjust this value to control the peak height of the jump
+        
+        switch direction {
+        case .left:
+            targetX = chicken.position.x
+        case .right:
+            targetX = chicken.position.x
+        case .up :
+            targetX = chicken.position.y
+        }
+        
+        let midPointX = (chicken.position.x + targetX) / 2
+        let midPointY = chicken.position.y + targetY
+        
+        
+        
+        let targetPoint = CGPoint(x: steps[chickenPosition ].position.x, y: steps[chickenPosition ].position.y)
+        
+        
+        // Create a path for the jump
+        let path = UIBezierPath()
+        path.move(to: chicken.position)
+        path.addQuadCurve(to: targetPoint, controlPoint: CGPoint(x: midPointX, y: midPointY))
+        
+        
+        let followPath = SKAction.follow(path.cgPath, asOffset: false, orientToPath: false, duration: 0.4)
+        followPath.timingMode = .easeInEaseOut
+        
+//        return
+        chicken.run(followPath) {
+            self.chicken?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            self.chicken?.physicsBody?.affectedByGravity = false
             
-            spinnyNode.run(SKAction.repeatForever(SKAction.rotate(byAngle: CGFloat(Double.pi), duration: 1)))
-            spinnyNode.run(SKAction.sequence([SKAction.wait(forDuration: 0.5),
-                                              SKAction.fadeOut(withDuration: 0.5),
-                                              SKAction.removeFromParent()]))
+            // Ensure chicken is on the target step
+//            if let targetStep = self.steps[safe: self.chickenPosition] {
+////                self.chicken?.position = CGPoint(x: targetStep.position.x, y: targetStep.position.y + (self.chicken?.size.height ?? 0) / 2 + (targetStep.size.height / 2))
+//            }
         }
     }
     
-    
-    func touchDown(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.green
-            self.addChild(n)
-        }
-    }
-    
-    func touchMoved(toPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.blue
-            self.addChild(n)
-        }
-    }
-    
-    func touchUp(atPoint pos : CGPoint) {
-        if let n = self.spinnyNode?.copy() as! SKShapeNode? {
-            n.position = pos
-            n.strokeColor = SKColor.red
-            self.addChild(n)
-        }
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if let label = self.label {
-            label.run(SKAction.init(named: "Pulse")!, withKey: "fadeInOut")
-        }
+    func didBegin(_ contact: SKPhysicsContact) {
+        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
-        for t in touches { self.touchDown(atPoint: t.location(in: self)) }
+        if collision == (1 | 2) {
+            // Chicken has landed on a step
+            chicken?.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        }
     }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchMoved(toPoint: t.location(in: self)) }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for t in touches { self.touchUp(atPoint: t.location(in: self)) }
-    }
-    
-    
-    override func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
+}
+
+extension Array {
+    subscript(safe index: Int) -> Element? {
+        return indices.contains(index) ? self[index] : nil
     }
 }

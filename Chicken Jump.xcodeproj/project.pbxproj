@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FD6CDD252C32B500004EB861 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FDCF25182C2D3FD900538517 /* Main.storyboard */; };
 		FDA4F7152C2D45F500B4C4D1 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */; };
 		FDA4F7172C2D46EC00B4C4D1 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */; };
 		FDCF250F2C2D3FD900538517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF250E2C2D3FD900538517 /* AppDelegate.swift */; };
@@ -244,6 +245,7 @@
 				FDCF25112C2D3FD900538517 /* GameScene.sks in Resources */,
 				FDCF251A2C2D3FD900538517 /* Base in Resources */,
 				FDCF251C2C2D3FD900538517 /* Assets.xcassets in Resources */,
+				FD6CDD252C32B500004EB861 /* Main.storyboard in Resources */,
 				FDCF25132C2D3FD900538517 /* Actions.sks in Resources */,
 				FDCF251F2C2D3FD900538517 /* Base in Resources */,
 			);
