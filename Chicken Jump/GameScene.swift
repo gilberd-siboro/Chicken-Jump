@@ -21,11 +21,13 @@ class GameScene: SKScene {
     var hp = "❤️❤️❤️"
     var obstacle1Exist = false
     var obstacles: [SKSpriteNode?] = []
+    
+    var playPauseButton: UIButton!
+    var isPausedGame: Bool = false
 
     
     override func didMove(to view: SKView) {
         pijakan = childNode(withName: "//pijakan") as? SKSpriteNode
-        
         obstacle1 = childNode(withName: "//obstacle1") as? SKSpriteNode
         obstacle2 = childNode(withName: "//obstacle2") as? SKSpriteNode
         
@@ -35,11 +37,59 @@ class GameScene: SKScene {
         obstacles.append(obstacle1)
         obstacles.append(obstacle2)
         
+        playPauseButton = UIButton(type: .system)
+        playPauseButton.setTitle("Pause", for: .normal)
+        playPauseButton.frame = CGRect(x: 20, y: 20, width: 100, height: 50)
+        //Sesuaikan posisi dan ukuran tombol
+        playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped(_:)), for: .touchUpInside)
+        view.addSubview(playPauseButton)
+        
         
         repeatedlySpawnObstacle()
     }
 
+    @objc func playPauseButtonTapped(_ sender: UIButton) {
+        if isPausedGame {
+            isPausedGame = false
+            sender.setTitle("Pause", for: .normal)
+            // Implementasi untuk melanjutkan permainan (jika perlu)
+            self.isPaused = false
+            // Hilangkan alert jika ada
+            if let viewController = view?.window?.rootViewController {
+                viewController.dismiss(animated: true, completion: nil)
+            }
+        } else {
+            isPausedGame = true
+            sender.setTitle("Play", for: .normal)
+            // Implementasi untuk menjeda permainan (jika perlu)
+            self.isPaused = true
+            
+            // Tampilkan alert
+            let alertController = UIAlertController(title: "Game Paused", message: nil, preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Resume", style: .default, handler: { (_) in self.resumeGame()
+            }))
+            alertController.addAction(UIAlertAction(title: "End Game", style: .destructive, handler: { (_) in self.endGame()
+            }))
+            if let viewController = view?.window?.rootViewController {
+                viewController.present(alertController, animated: true, completion: nil)
+            }
+        }
+    }
     
+    // Method untuk melanjutkan permainan
+        func resumeGame() {
+            isPausedGame = false
+            playPauseButton.setTitle("Pause", for: .normal)
+            self.isPaused = false
+        }
+        
+        // Method untuk mengakhiri permainan
+        func endGame() {
+            // Implementasi untuk mengakhiri permainan (misalnya kembali ke menu utama)
+            if let viewController = view?.window?.rootViewController as? GameViewController {
+                viewController.dismiss(animated: true, completion: nil)
+            }
+        }
 
     
     func repeatedlySpawnObstacle() {

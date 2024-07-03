@@ -11,6 +11,7 @@ import AVFoundation
 
 class MainMenuViewController: UIViewController {
 
+
     @IBOutlet weak var muteButton: UIButton!
     var isMute = false
     
@@ -21,6 +22,7 @@ class MainMenuViewController: UIViewController {
 
         // Do any additional setup after loading the view.
     }
+
     
     @IBAction func changeMuteStatus(_ sender: Any) {
         if !isMute{

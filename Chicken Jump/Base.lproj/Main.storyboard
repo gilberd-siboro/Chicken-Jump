@@ -48,11 +48,23 @@
                                     <outletCollection property="gestureRecognizers" destination="0sn-Yy-hxy" appends="YES" id="mXU-XE-ZNw"/>
                                 </connections>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nZS-Zi-h7M">
+                                <rect key="frame" x="41" y="59" width="50" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="speaker.circle.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="changeMuteStatus:" destination="yc5-le-ek1" eventType="touchUpInside" id="rcm-li-sMR"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bGK-k6-wHZ"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </view>
                     <navigationItem key="navigationItem" id="ifo-WP-vN8"/>
+                    <connections>
+                        <outlet property="muteButton" destination="nZS-Zi-h7M" id="3rB-Qk-IvP"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dvl-Vb-s91" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="0sn-Yy-hxy">
@@ -172,6 +184,7 @@
         <image name="chicken3" width="588" height="632"/>
         <image name="peraturan" width="658" height="190"/>
         <image name="play" width="700" height="336"/>
+        <image name="speaker.circle.fill" catalog="system" width="128" height="123"/>
         <image name="square" width="542" height="460"/>
         <image name="text1" width="3580" height="1116"/>
         <image name="text2" width="1120" height="848"/>

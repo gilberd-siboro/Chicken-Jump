@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		FDA4F7152C2D45F500B4C4D1 /* MainMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */; };
 		FDA4F7172C2D46EC00B4C4D1 /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */; };
+		FDB293752C35513A009D8556 /* Bgmusic.mpeg in Resources */ = {isa = PBXBuildFile; fileRef = FDB293742C35513A009D8556 /* Bgmusic.mpeg */; };
 		FDCF250F2C2D3FD900538517 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF250E2C2D3FD900538517 /* AppDelegate.swift */; };
 		FDCF25112C2D3FD900538517 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FDCF25102C2D3FD900538517 /* GameScene.sks */; };
 		FDCF25132C2D3FD900538517 /* Actions.sks in Resources */ = {isa = PBXBuildFile; fileRef = FDCF25122C2D3FD900538517 /* Actions.sks */; };
@@ -44,6 +45,7 @@
 /* Begin PBXFileReference section */
 		FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuViewController.swift; sourceTree = "<group>"; };
 		FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		FDB293742C35513A009D8556 /* Bgmusic.mpeg */ = {isa = PBXFileReference; lastKnownFileType = video.mpeg; path = Bgmusic.mpeg; sourceTree = "<group>"; };
 		FDCF250B2C2D3FD900538517 /* Chicken Jump.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Chicken Jump.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCF250E2C2D3FD900538517 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FDCF25102C2D3FD900538517 /* GameScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameScene.sks; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */,
 				FF6933312C33FD85006D9914 /* GameOverScene.sks */,
 				FF6933332C33FDB4006D9914 /* GameOverScene.swift */,
+				FDB293742C35513A009D8556 /* Bgmusic.mpeg */,
 			);
 			path = "Chicken Jump";
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				FDCF25132C2D3FD900538517 /* Actions.sks in Resources */,
 				FF6933322C33FD85006D9914 /* GameOverScene.sks in Resources */,
 				FDCF251F2C2D3FD900538517 /* Base in Resources */,
+				FDB293752C35513A009D8556 /* Bgmusic.mpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
