@@ -7,18 +7,19 @@
 
 import UIKit
 import AVFoundation
+import SpriteKit
 
 
 class MainMenuViewController: UIViewController {
 
-
+    @IBOutlet weak var skView: SKView!
     @IBOutlet weak var muteButton: UIButton!
     var isMute = false
     
     //cek music playernya tadi dibuat dimana
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     override func viewDidLoad() {
-        super.viewDidLoad()
+       super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
@@ -36,10 +37,22 @@ class MainMenuViewController: UIViewController {
             appDelegate.music?.play()
         }
     }
-    //    override var prefersStatusBarHidden: Bool {
-//        return true
-//    }
     
+    @IBAction func startGameButtonTapped(_ sender: UIButton) {
+            // Initialize and present GameScene
+            let gameScene = GameScene(size: skView.bounds.size)
+            gameScene.scaleMode = .aspectFill
+            skView.presentScene(gameScene)
+        }
+
+ 
+        func gameOver() {
+            // Dismiss the game view controller and go back to the main menu
+            dismiss(animated: true, completion: nil)
+        }
+    
+    
+    }
 
     /*
     // MARK: - Navigation
@@ -51,4 +64,4 @@ class MainMenuViewController: UIViewController {
     }
     */
 
-}
+

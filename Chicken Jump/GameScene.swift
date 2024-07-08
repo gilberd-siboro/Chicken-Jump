@@ -9,7 +9,7 @@ import UIKit
 import SpriteKit
 import SwiftUI
 
-//import SpriteKit
+
 
 class GameScene: SKScene, SKPhysicsContactDelegate{
     
@@ -38,6 +38,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         didSet {
             score?.text = "\(cornIcon) \(poin)"
         }
+        
     }
     
     override func didMove(to view: SKView) {
@@ -50,10 +51,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         obstacle2 = childNode(withName: "//Step3") as? SKSpriteNode
         jagung1 = childNode(withName: "//jagung1") as? SKSpriteNode
         chicken?.physicsBody = SKPhysicsBody(rectangleOf: chicken!.size)
-//        chicken?.physicsBody?.friction = 0.0
-//        chicken?.physicsBody?.restitution = 1.0
-//        chicken?.physicsBody?.linearDamping = 0.0
-//        chicken?.physicsBody?.angularDamping = 0.0
+        //        chicken?.physicsBody?.friction = 0.0
+        //        chicken?.physicsBody?.restitution = 1.0
+        //        chicken?.physicsBody?.linearDamping = 0.0
+        //        chicken?.physicsBody?.angularDamping = 0.0
         chicken?.physicsBody?.affectedByGravity = true
         chicken?.physicsBody?.categoryBitMask = 1
         chicken?.physicsBody?.collisionBitMask = 2
@@ -98,13 +99,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(playPauseButton)
         
+        hpLabel  = SKLabelNode(text: "\(hp)")
+        hpLabel?.zPosition = 15
+        //        hpLabel?.frame ==> size
+        hpLabel?.position = CGPoint(x: 200, y: size.height/2 - 50)
+        
+        addChild(hpLabel!)
         
         repeatedlySpawnObstacle()
         repeatedlySpawnJagung1()
-//        spawnChicken()
+        //        spawnChicken()
         
         setupScore()
-
+        
     }
     
     @objc func swipeRight() {
@@ -126,14 +133,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 500)
         move.timingMode = .easeInEaseOut
         
-//        let wait  = SKAction.wait(forDuration: 0.1)
+        //        let wait  = SKAction.wait(forDuration: 0.1)
         let activatePhysic = SKAction.run {
-//            guard let chicken = actionChicken else { return }
+            //            guard let chicken = actionChicken else { return }
             
             chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
             chicken.physicsBody?.isDynamic = true
             chicken.physicsBody?.allowsRotation = false
             chicken.physicsBody?.affectedByGravity = true
+            chicken.physicsBody?.contactTestBitMask = chicken.physicsBody?.collisionBitMask ?? 0
         }
         
         chicken.run(SKAction.sequence([move, activatePhysic]))
@@ -156,24 +164,25 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         
         let activatePhysic = SKAction.run {
-//            guard let chicken = actionChicken else { return }
+            //            guard let chicken = actionChicken else { return }
             
             chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
             chicken.physicsBody?.isDynamic = true
             chicken.physicsBody?.allowsRotation = false
             chicken.physicsBody?.affectedByGravity = true
+            chicken.physicsBody?.contactTestBitMask = chicken.physicsBody?.collisionBitMask ?? 0
         }
         
         chicken.run(SKAction.sequence([move, activatePhysic]))
         
-
+        
     }
     
     @objc func swipeUp(){
-//        if chickenPosition < steps.count - 1 {
-//            chickenPosition += 2
-//            jumpChicken(to: .up)
-//        }
+        //        if chickenPosition < steps.count - 1 {
+        //            chickenPosition += 2
+        //            jumpChicken(to: .up)
+        //        }
         
     }
     
@@ -186,11 +195,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     func setupScore() {
         let background = SKShapeNode(rectOf: CGSize(width: 150, height: 80), cornerRadius: 15)
-            background.fillColor = .lightGray
-            background.lineWidth = 2
-            background.position = CGPoint(x: frame.midX + 220, y: frame.maxY - 130)
-            background.zPosition = 90 // Di bawah label skor
-            addChild(background)
+        background.fillColor = .lightGray
+        background.lineWidth = 2
+        background.position = CGPoint(x: frame.midX + 220, y: frame.maxY - 130)
+        background.zPosition = 90 // Di bawah label skor
+        addChild(background)
         
         score = SKLabelNode(fontNamed: "Garamond")
         score?.text = "0"
@@ -232,7 +241,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         node.run(SKAction.sequence([moveDownAction, removeNodeAction]))
     }
     
-
+    
     @objc func playPauseButtonTapped(_ sender: UIButton) {
         if isPausedGame {
             isPausedGame = false
@@ -260,22 +269,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             }
         }
     }
+
     
     // Method untuk melanjutkan permainan
-        func resumeGame() {
-            isPausedGame = false
-            playPauseButton.setTitle("Pause", for: .normal)
-            self.isPaused = false
+    func resumeGame() {
+        isPausedGame = false
+        playPauseButton.setTitle("Pause", for: .normal)
+        self.isPaused = false
+    }
+    
+    // Method untuk mengakhiri permainan
+    func endGame() {
+        // Implementasi untuk mengakhiri permainan (kembali ke menu utama)
+        if let viewController = self.view?.window?.rootViewController as? MainMenuViewController {
+            viewController.dismiss(animated: true, completion: nil)
         }
-        
-        // Method untuk mengakhiri permainan
-        func endGame() {
-            // Implementasi untuk mengakhiri permainan (misalnya kembali ke menu utama)
-            if let viewController = view?.window?.rootViewController as? MainMenuViewController {
-                viewController.dismiss(animated: true, completion: nil)
-            }
-        }
-
+    }
+    
     
     func repeatedlySpawnObstacle() {
         let spawnAction = SKAction.run {
@@ -291,7 +301,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     func spawnObstacles() {
         var randomObstacle = obstacles.randomElement() ?? obstacle1
-            
+        
         while (obstacle1Exist == true) {
             randomObstacle = obstacles.randomElement() ?? obstacle1
             
@@ -310,12 +320,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 lastXPositionOfObstacle = 150
             }
             newObstacle.position = CGPoint(x: lastXPositionOfObstacle, y: 1000)
-//            newObstacle.physicsBody = nil
+            //            newObstacle.physicsBody = nil
             newObstacle.physicsBody = SKPhysicsBody(rectangleOf: newObstacle.size)
             newObstacle.physicsBody?.isDynamic = false
             newObstacle.physicsBody?.affectedByGravity = false
             newObstacle.physicsBody?.allowsRotation = false
             
+            print(newObstacle.name)
             
             
             addChild(newObstacle)
@@ -323,7 +334,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             if veryFirstObstacle == nil {
                 veryFirstObstacle = newObstacle.copy() as? SKSpriteNode
                 
-            
+                
                 spawnChicken()
             }
             
@@ -335,12 +346,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 firstObstaclePosition = newObstacle.position
             }
         }
-
+        
         if randomObstacle == obstacle1 {
             obstacle1Exist = true
         }
     }
-
+    
     func spawnChicken() {
         
         
@@ -349,97 +360,137 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             chicken1.position =   veryFirstObstacle!.position // CGPoint(x: 270, y: -370)
             //chicken1.position.y = chicken1.position.y + 200
             chicken1.zPosition = 9
-
+            
             chicken1.physicsBody = SKPhysicsBody(rectangleOf: chicken1.size)
             chicken1.physicsBody?.isDynamic = true
             chicken1.physicsBody?.allowsRotation = false
             chicken1.physicsBody?.affectedByGravity = true
-//            chicken1.physicsBody?.restitution = 0.0
+            chicken1.physicsBody?.contactTestBitMask = chicken1.physicsBody?.collisionBitMask ?? 0
             
             addChild(chicken1)
             
             actionChicken = chicken1
-
+            
             //chicken1.run(SKAction.moveTo(y: -800, duration: 15))
         }
     }
     
-
+    
     func moveObstacle1(node: SKNode) {
         let moveDownAction = SKAction.moveTo(y: -800, duration: 15)
         let removeNodeAction = SKAction.removeFromParent()
         node.run(SKAction.sequence([moveDownAction, removeNodeAction]))
     }
-
-
+    
+    
     @objc(didBeginContact:) func didBegin(_ contact: SKPhysicsContact) {
-        let bodyA = contact.bodyA
-        let bodyB = contact.bodyB
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
         
-        if (bodyA.categoryBitMask == ayamCategory && bodyB.categoryBitMask == jagungCategory) ||
-               (bodyA.categoryBitMask == jagungCategory && bodyB.categoryBitMask == ayamCategory) {
-            if let jagung = (bodyA.categoryBitMask == jagungCategory ? bodyA.node : bodyB.node) {
-                jagung.removeFromParent()
-                updateScore()
+        
+        
+        if nodeB.name == "Chicken" && nodeA.name == "Step2" || nodeA.name == "Chicken" && nodeB.name == "Step2" {
+            
+            
+            print("body A: \(nodeA.name)")
+            print("body B: \(nodeB.name)")
+            
+            
+            let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "pijakan"))
+            
+            
+            if nodeA.name == "Step2" {
+                nodeA.run(changeTexture)
             }
+            
+            if nodeB.name == "Step2" {
+                nodeB.run(changeTexture)
+            }
+            
+            
+            if hp.count > 0{
+                hp.removeLast()
+                hpLabel?.text = "\(hp)" // Update the label text explicitly
+            }
+            
+            // Update hp label
+            hpLabel?.text = "\(hp)"
+            
+            // Check if HP is depleted
+            if hp.isEmpty {
+                showGameOver()
+            }
+            
+            
         }
-        // handle collision chicken & trap
-//        if nodeA.name == "chicken2" && nodeB.name == "obstacel1"{
-//            nodeB.removeFromParent()
-//            
-//            if nodeA.name == "chicken3" && nodeB.name == "obstacel1"{
-//                nodeB.removeFromParent()
-//                
-//                if hp.count > 0 {
-//                    hp.removeLast()
-//                }
-//                
-//                // update hp label
-//                hpLabel?.text = "\(hp)"
-//                
-//                if hp.count == 0 {
-//                    showGameOver()
-//                }
-//            }
-//        }
-        
-
-//        func showGameOver(){
-//            // transition to GameOverScene
-//            if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
-//                
-//                gameOverScene.scaleMode = .aspectFill
-//                gameOverScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//                let transition = SKTransition.reveal(with: .down, duration: 1)
-//                
-//                view?.presentScene(gameOverScene, transition: transition)
-//            }
-//        }
     }
     
-    func updateScore() {
-        poin += 5
-        score?.text = "\(cornIcon) \(poin)"
-        print("Skor bertambah Skor saat ini: \(cornIcon) \(poin)")
-        
+    
+    //        if (bodyA.categoryBitMask == ayamCategory && bodyB.categoryBitMask == jagungCategory) ||
+    //               (bodyA.categoryBitMask == jagungCategory && bodyB.categoryBitMask == ayamCategory) {
+    //            if let jagung = (bodyA.categoryBitMask == jagungCategory ? bodyA.node : bodyB.node) {
+    //                jagung.removeFromParent()
+    //            //    updateScore()
+    //            }
+    //        }
+    // handle collision chicken & trap
+    //
+    //        if nodeA.name == "Chicken" && nodeB.name == "Step2" {
+    //                nodeB.removeFromParent()
+    //                nodeB.name = "Step1" // Ubah nama nodeB menjadi "Step1"
+    
+    //                // Kurangi HPpause
+    //                if hp.count > 0 {
+    //                    hp.removeLast()
+    //                }
+    //
+    //                // Update hp label
+    //                hpLabel?.text = "\(hp)"
+    //
+    //                // Check if HP is depleted
+    //                if hp.isEmpty {
+    //                    showGameOver()
+    //                }
+    //            }
+    
+    
+    
+    func showGameOver(){
+        // transition to GameOverScene
+        if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
+            
+            gameOverScene.scaleMode = .aspectFill
+            gameOverScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let transition = SKTransition.reveal(with: .down, duration: 1)
+            
+            view?.presentScene(gameOverScene, transition: transition)
+        }
     }
     
+    
+    
+    
+    
+    //    func updateScore() {
+    //        poin += 5
+    //        score?.text = "\(cornIcon) \(poin)"
+    //        print("Skor bertambah Skor saat ini: \(cornIcon) \(poin)")
+    //
+    //    }
+    
+    
+    
+    struct SceneKitView: UIViewRepresentable {
+        func makeUIView(context: Context) -> SKView {
+            let view = SKView()
+            return view
+        }
+        
+        func updateUIView(_ uiView: SKView, context: Context) {
+            let scene = GameScene(size: uiView.bounds.size)
+            scene.scaleMode = .aspectFill
+            uiView.presentScene(scene)
+        }
+    }
     
 }
-
-
-
-struct SceneKitView: UIViewRepresentable {
-    func makeUIView(context: Context) -> SKView {
-        let view = SKView()
-        return view
-    }
-
-    func updateUIView(_ uiView: SKView, context: Context) {
-        let scene = GameScene(size: uiView.bounds.size)
-        scene.scaleMode = .aspectFill
-        uiView.presentScene(scene)
-    }
-}
-
-// knknjkn
