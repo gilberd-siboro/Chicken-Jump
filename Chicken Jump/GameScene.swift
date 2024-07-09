@@ -271,6 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
 
     
+    
     // Method untuk melanjutkan permainan
     func resumeGame() {
         isPausedGame = false
@@ -383,78 +384,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     
-    @objc(didBeginContact:) func didBegin(_ contact: SKPhysicsContact) {
+    func changeObstacleTexture(_ obstacle: SKNode) {
+        let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "pijakan"))
+        obstacle.run(changeTexture)
+        obstacle.name = "pijakan"
+    }
+    
+    @objc func didBegin(_ contact: SKPhysicsContact) {
         guard let nodeA = contact.bodyA.node else { return }
         guard let nodeB = contact.bodyB.node else { return }
-        
-        
-        
-        if nodeB.name == "Chicken" && nodeA.name == "Step2" || nodeA.name == "Chicken" && nodeB.name == "Step2" {
-            
-            
-            print("body A: \(nodeA.name)")
-            print("body B: \(nodeB.name)")
-            
-            
-            let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "pijakan"))
-            
-            
+
+        // Kondisi untuk memastikan collision terjadi antara Chicken dan Step2
+        if (nodeA.name == "Chicken" && nodeB.name == "Step2") || (nodeA.name == "Step2" && nodeB.name == "Chicken") {
+            // Mengubah tekstur Step2 menjadi "pijakan" sekali saja
             if nodeA.name == "Step2" {
-                nodeA.run(changeTexture)
+                changeObstacleTexture(nodeA)
+            } else if nodeB.name == "Step2" {
+                changeObstacleTexture(nodeB)
             }
-            
-            if nodeB.name == "Step2" {
-                nodeB.run(changeTexture)
-            }
-            
-            
-            if hp.count > 0{
+
+            // Kurangi HP hanya sekali per collision
+            if hp.count > 0 {
                 hp.removeLast()
-                hpLabel?.text = "\(hp)" // Update the label text explicitly
+                hpLabel?.text = "\(hp)" // Update label HP
             }
-            
-            // Update hp label
-            hpLabel?.text = "\(hp)"
-            
-            // Check if HP is depleted
+
+            // Cek jika HP habis
             if hp.isEmpty {
                 showGameOver()
             }
-            
-            
         }
     }
-    
-    
-    //        if (bodyA.categoryBitMask == ayamCategory && bodyB.categoryBitMask == jagungCategory) ||
-    //               (bodyA.categoryBitMask == jagungCategory && bodyB.categoryBitMask == ayamCategory) {
-    //            if let jagung = (bodyA.categoryBitMask == jagungCategory ? bodyA.node : bodyB.node) {
-    //                jagung.removeFromParent()
-    //            //    updateScore()
-    //            }
-    //        }
-    // handle collision chicken & trap
-    //
-    //        if nodeA.name == "Chicken" && nodeB.name == "Step2" {
-    //                nodeB.removeFromParent()
-    //                nodeB.name = "Step1" // Ubah nama nodeB menjadi "Step1"
-    
-    //                // Kurangi HPpause
-    //                if hp.count > 0 {
-    //                    hp.removeLast()
-    //                }
-    //
-    //                // Update hp label
-    //                hpLabel?.text = "\(hp)"
-    //
-    //                // Check if HP is depleted
-    //                if hp.isEmpty {
-    //                    showGameOver()
-    //                }
-    //            }
-    
-    
-    
+
     func showGameOver(){
         // transition to GameOverScene
         if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
@@ -467,16 +428,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         }
     }
     
+        func updateScore() {
+            poin += 5
+            score?.text = "\(cornIcon) \(poin)"
+            print("Skor bertambah Skor saat ini: \(cornIcon) \(poin)")
     
-    
-    
-    
-    //    func updateScore() {
-    //        poin += 5
-    //        score?.text = "\(cornIcon) \(poin)"
-    //        print("Skor bertambah Skor saat ini: \(cornIcon) \(poin)")
-    //
-    //    }
+        }
     
     
     
