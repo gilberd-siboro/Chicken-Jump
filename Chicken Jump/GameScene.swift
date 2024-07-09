@@ -23,22 +23,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var hp = "❤️❤️❤️"
     var obstacle1Exist = false
     var obstacles: [SKSpriteNode?] = []
-    var jagung1: SKSpriteNode?
+    var jagung: SKSpriteNode?
     var cornIcon = "🌽"
     var playPauseButton: UIButton!
     var isPausedGame: Bool = false
-    let jagungCategory: UInt32 = 0x4 << 2
+    let jagungCategory: UInt32 = 0x1 << 1
     let ayamCategory: UInt32 = 0x1 << 0
     var chicken: SKSpriteNode?
     var chickenPosition = 0 // Start at step1 (index 0)
     var actionChicken: SKSpriteNode?
     var score: SKLabelNode?
-    var invisibleBlock: SKSpriteNode?
+    var oil: SKSpriteNode?
+    let stepCategory: UInt32 = 0x1 << 2
+    let obstacleCategory: UInt32 = 0x1 << 3
+
     var poin = 0 {
         didSet {
             score?.text = "\(cornIcon) \(poin)"
         }
     }
+
+    
     
     override func didMove(to view: SKView) {
         physicsWorld.contactDelegate = self
@@ -48,7 +53,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         pijakan = childNode(withName: "//Step1") as? SKSpriteNode
         obstacle1 = childNode(withName: "//Step2") as? SKSpriteNode
         obstacle2 = childNode(withName: "//Step3") as? SKSpriteNode
-        jagung1 = childNode(withName: "//jagung1") as? SKSpriteNode
+        jagung = childNode(withName: "//Jagung") as? SKSpriteNode
+        oil = childNode(withName: "//Oil") as? SKSpriteNode
+        
+//        
+//        oil?.physicsBody = SKPhysicsBody(rectangleOf: oil!.size)
+//        oil?.physicsBody?.affectedByGravity = false
+//        oil?.physicsBody?.categoryBitMask = 1
+        
         chicken?.physicsBody = SKPhysicsBody(rectangleOf: chicken!.size)
 //        chicken?.physicsBody?.friction = 0.0
 //        chicken?.physicsBody?.restitution = 1.0
@@ -57,17 +69,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         chicken?.physicsBody?.affectedByGravity = true
         chicken?.physicsBody?.categoryBitMask = 1
         chicken?.physicsBody?.collisionBitMask = 2
-        chicken?.physicsBody?.contactTestBitMask = 2
+        chicken?.physicsBody?.contactTestBitMask = chicken?.physicsBody?.collisionBitMask ?? 0
         chicken?.physicsBody?.allowsRotation = false
-        chicken?.physicsBody?.categoryBitMask = ayamCategory
-        chicken?.physicsBody?.contactTestBitMask = jagungCategory
+//        chicken?.physicsBody?.categoryBitMask = ayamCategory
+//        chicken?.physicsBody?.contactTestBitMask = jagungCategory
+        oil?.physicsBody?.isDynamic = false
+        oil?.physicsBody?.affectedByGravity = false
+        oil?.physicsBody?.allowsRotation = false
+        
         
         for step in steps {
             step.physicsBody = SKPhysicsBody(rectangleOf: step.size)
             step.physicsBody?.isDynamic = false
-            step.physicsBody?.categoryBitMask = 2
-            step.physicsBody?.collisionBitMask = 1
-            step.physicsBody?.contactTestBitMask = 1
+            step.physicsBody?.categoryBitMask = stepCategory
+            step.physicsBody?.collisionBitMask = ayamCategory
+            step.physicsBody?.contactTestBitMask = ayamCategory
         }
         
         // Add swipe gestures
@@ -83,13 +99,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         swipeUp.direction = .up
         view.addGestureRecognizer(swipeUp)
         
-        jagung1?.name = "Jagung1"
+//        jagung?.name = "Jagung1"
         
         obstacles.append(pijakan)
         obstacles.append(pijakan)
         obstacles.append(pijakan)
         obstacles.append(obstacle1)
         obstacles.append(obstacle2)
+        
+        hpLabel  = SKLabelNode(text: "\(hp)")
+        hpLabel?.zPosition = 15
+        //        hpLabel?.frame ==> size
+        hpLabel?.position = CGPoint(x: 200, y: size.height/2 - 50)
+        
         
         playPauseButton = UIButton(type: .system)
         playPauseButton.setTitle("Pause", for: .normal)
@@ -98,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped(_:)), for: .touchUpInside)
         view.addSubview(playPauseButton)
         
-        
+        addChild(hpLabel!)
         repeatedlySpawnObstacle()
         repeatedlySpawnJagung1()
 //        spawnChicken()
@@ -127,16 +149,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         move.timingMode = .easeInEaseOut
         
 //        let wait  = SKAction.wait(forDuration: 0.1)
-        let activatePhysic = SKAction.run {
-//            guard let chicken = actionChicken else { return }
-            
+        let activatePhysics = SKAction.run {
             chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
             chicken.physicsBody?.isDynamic = true
             chicken.physicsBody?.allowsRotation = false
             chicken.physicsBody?.affectedByGravity = true
+            chicken.physicsBody?.categoryBitMask = self.ayamCategory
+            chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
+            chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
         }
         
-        chicken.run(SKAction.sequence([move, activatePhysic]))
+        chicken.run(SKAction.sequence([move, activatePhysics]))
         
         
     }
@@ -155,16 +178,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         move.timingMode = .easeInEaseOut
         
         
-        let activatePhysic = SKAction.run {
-//            guard let chicken = actionChicken else { return }
-            
+        let activatePhysics = SKAction.run {
             chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
             chicken.physicsBody?.isDynamic = true
             chicken.physicsBody?.allowsRotation = false
             chicken.physicsBody?.affectedByGravity = true
+            chicken.physicsBody?.categoryBitMask = self.ayamCategory
+            chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
+            chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
         }
         
-        chicken.run(SKAction.sequence([move, activatePhysic]))
+        
+        chicken.run(SKAction.sequence([move, activatePhysics]))
         
 
     }
@@ -211,7 +236,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     func spawnJagung1() {
-        if let newJagung1 = jagung1?.copy() as? SKSpriteNode {
+        if let newJagung1 = jagung?.copy() as? SKSpriteNode {
             let randomX = xPosition[Int.random(in: 0...1)]
             newJagung1.position = CGPoint(x: randomX, y: 2000)
             newJagung1.physicsBody = SKPhysicsBody(rectangleOf: newJagung1.size)
@@ -219,10 +244,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             newJagung1.physicsBody?.allowsRotation = false
             newJagung1.physicsBody?.categoryBitMask = jagungCategory
             newJagung1.physicsBody?.contactTestBitMask = ayamCategory
-            newJagung1.name = "Jagung1"
+            newJagung1.name = "Jagung"
             addChild(newJagung1)
             moveJagung1(node: newJagung1)
-            
         }
     }
     
@@ -371,58 +395,100 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         node.run(SKAction.sequence([moveDownAction, removeNodeAction]))
     }
 
-
-    @objc(didBeginContact:) func didBegin(_ contact: SKPhysicsContact) {
-        let bodyA = contact.bodyA
-        let bodyB = contact.bodyB
-        
-        if (bodyA.categoryBitMask == ayamCategory && bodyB.categoryBitMask == jagungCategory) ||
-               (bodyA.categoryBitMask == jagungCategory && bodyB.categoryBitMask == ayamCategory) {
-            if let jagung = (bodyA.categoryBitMask == jagungCategory ? bodyA.node : bodyB.node) {
-                jagung.removeFromParent()
-                updateScore()
-            }
-        }
-        // handle collision chicken & trap
-//        if nodeA.name == "chicken2" && nodeB.name == "obstacel1"{
-//            nodeB.removeFromParent()
-//            
-//            if nodeA.name == "chicken3" && nodeB.name == "obstacel1"{
-//                nodeB.removeFromParent()
-//                
-//                if hp.count > 0 {
-//                    hp.removeLast()
-//                }
-//                
-//                // update hp label
-//                hpLabel?.text = "\(hp)"
-//                
-//                if hp.count == 0 {
-//                    showGameOver()
-//                }
-//            }
-//        }
-        
-
-//        func showGameOver(){
-//            // transition to GameOverScene
-//            if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
-//                
-//                gameOverScene.scaleMode = .aspectFill
-//                gameOverScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//                let transition = SKTransition.reveal(with: .down, duration: 1)
-//                
-//                view?.presentScene(gameOverScene, transition: transition)
-//            }
-//        }
+    func changeObstacleTexture(_ obstacle: SKNode) {
+        let changeTexture = SKAction.setTexture(SKTexture(imageNamed: "pijakan"))
+        obstacle.run(changeTexture)
+        obstacle.name = "pijakan"
     }
     
-    func updateScore() {
-        poin += 5
-        score?.text = "\(cornIcon) \(poin)"
-        print("Skor bertambah Skor saat ini: \(cornIcon) \(poin)")
+    
+//    func didBegin(_ contact: SKPhysicsContact) {
+//        let nodeA = contact.bodyA.node
+//        let nodeB = contact.bodyB.node
+//        
+//        if let nodeA = nodeA, let nodeB = nodeB {
+//            if nodeA.name == "Chicken" && nodeB.name?.contains("Jagung") == true {
+//                handleJagungCollision(jagung: nodeB)
+//            } else if nodeB.name == "Chicken" && nodeA.name?.contains("Jagung") == true {
+//                handleJagungCollision(jagung: nodeA)
+//            }
+//        }
+//        
+////        if let nodeA = nodeA, let nodeB = nodeB {
+////            if nodeA.name == "Chicken" && nodeB.name?.contains("Oil") == true {
+////                handleOilCollision(chicken: nodeB)
+////            } else if nodeB.name == "Chicken" && nodeA.name?.contains("Oil") == true {
+////                handleOilCollision(chicken: nodeA)
+////            }xs
+////        }
+//    }
+    
+    @objc func didBegin(_ contact: SKPhysicsContact) {
+        guard let nodeA = contact.bodyA.node else { return }
+        guard let nodeB = contact.bodyB.node else { return }
+
+        // Kondisi untuk memastikan collision terjadi antara Chicken dan Step2
+        if (nodeA.name == "Chicken" && nodeB.name == "Jagung") || (nodeA.name == "Jagung" && nodeB.name == "Chicken") {
+            // Mengubah tekstur Step2 menjadi "pijakan" sekali saja
+            if nodeA.name == "Jagung" {
+                handleJagungCollision(jagung: nodeA)
+            } else if nodeB.name == "Jagung" {
+                handleJagungCollision(jagung: nodeB)
+            }
+        }
         
+        if (nodeA.name == "Chicken" && nodeB.name == "Step2") || (nodeA.name == "Step2" && nodeB.name == "Chicken") {
+            // Mengubah tekstur Step2 menjadi "pijakan" sekali saja
+            if nodeA.name == "Step2" {
+                changeObstacleTexture(nodeA)
+            } else if nodeB.name == "Step2" {
+                changeObstacleTexture(nodeB)
+            }
+
+            // Kurangi HP hanya sekali per collision
+            if hp.count > 0 {
+                hp.removeLast()
+                hpLabel?.text = "\(hp)" // Update label HP
+            }
+
+            // Cek jika HP habis
+            if hp.isEmpty {
+                showGameOver()
+            }
+        }
+        if (nodeA.name == "Chicken" && nodeB.name == "Oil") || (nodeA.name == "Oil" && nodeB.name == "Chicken") {
+            // Mengubah tekstur Step2 menjadi "pijakan" sekali saja
+            if nodeA.name == "Oil" {
+                print("collision")
+            } else if nodeB.name == "Oil" {
+                print("collision")
+            }
+        }
+        
+
     }
+    func handleJagungCollision(jagung: SKNode) {
+        jagung.removeFromParent()
+        poin += 5
+    }
+    
+    func handleOilCollision(chicken: SKNode){
+        chicken.removeFromParent()
+    }
+
+    func showGameOver(){
+        // transition to GameOverScene
+        if let gameOverScene = SKScene(fileNamed: "GameOverScene"){
+            
+            gameOverScene.scaleMode = .aspectFill
+            gameOverScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+            let transition = SKTransition.reveal(with: .down, duration: 1)
+            
+            view?.presentScene(gameOverScene, transition: transition)
+        }
+    }
+    
+    
     
     
 }
