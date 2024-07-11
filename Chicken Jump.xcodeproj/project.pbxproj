@@ -122,8 +122,8 @@
 				FDCF251D2C2D3FD900538517 /* LaunchScreen.storyboard */,
 				FDA4F7142C2D45F500B4C4D1 /* MainMenuViewController.swift */,
 				FDA4F7162C2D46EC00B4C4D1 /* TutorialViewController.swift */,
-				FF6933312C33FD85006D9914 /* GameOverScene.sks */,
 				FF6933332C33FDB4006D9914 /* GameOverScene.swift */,
+				FF6933312C33FD85006D9914 /* GameOverScene.sks */,
 				FDB293742C35513A009D8556 /* Bgmusic.mpeg */,
 			);
 			path = "Chicken Jump";

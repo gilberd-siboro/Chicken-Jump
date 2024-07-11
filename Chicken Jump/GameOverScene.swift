@@ -1,46 +1,51 @@
-//
-//  GameOverScene.swift
-//  Chicken Jump
-//
-//  Created by Foundation-011 on 01/07/24.
-//
-
 import UIKit
-import Foundation
 import SpriteKit
 
 class GameOverScene: SKScene {
-    var gameOverLabel: SKLabelNode?
-    var restartLabel: SKLabelNode?
+    var backHomeLabel: SKLabelNode?
+    var playAgainLabel: SKLabelNode?
     
     override func didMove(to view: SKView) {
-        restartLabel = self.childNode(withName: "//restartLabel") as? SKLabelNode
-        gameOverLabel = SKLabelNode(text: "Game Over :(")
-        gameOverLabel?.fontName = "Arial Rounded MT- Bold"
-        gameOverLabel?.fontSize = 50
-        gameOverLabel?.color = .black
-        gameOverLabel?.position = .zero
+        backHomeLabel = self.childNode(withName: "//backHomeLabel") as? SKLabelNode
         
-        addChild(gameOverLabel!)
+        if let backHomeLabel = backHomeLabel {
+            backHomeLabel.fontName = "Marker Felt Thin"
+            backHomeLabel.fontSize = 50
+            backHomeLabel.fontColor = SKColor(red: 70.0/255.0, green: 99.0/255.0, blue: 136.0/255.0, alpha: 1.0)
+        }
+
+        playAgainLabel = self.childNode(withName: "//playAgainLabel") as? SKLabelNode
+        
+        if let playAgainLabel = playAgainLabel {
+            playAgainLabel.fontName = "Marker Felt Thin"
+            playAgainLabel.fontSize = 50
+            playAgainLabel.fontColor = SKColor(red: 70.0/255.0, green: 99.0/255.0, blue: 136.0/255.0, alpha: 1.0)
+        }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        guard let touch = touches.first else { return}
+        guard let touch = touches.first else { return }
         let location = touch.location(in: self)
         
-        if self.atPoint(location) == restartLabel{
-            restartGame()
+        if let playAgainLabel = playAgainLabel, self.atPoint(location) == playAgainLabel {
+            playAgain()
+        } else if let backHomeLabel = backHomeLabel, self.atPoint(location) == backHomeLabel {
+            print("Back Home Label Touched") // Debug log
+            backToMainMenu()
         }
     }
     
-    func restartGame(){
+    func playAgain() {
         if let scene = SKScene(fileNamed: "GameScene") {
             scene.scaleMode = .aspectFill
-            
             let transition = SKTransition.flipHorizontal(withDuration: 1)
             view?.presentScene(scene, transition: transition)
-
         }
     }
+    
+    func backToMainMenu() {
+        print("Posting Notification to go back to Main Menu") // Debug log
+        NotificationCenter.default.post(name: Notification.Name("BackToMainMenu"), object: nil)
+    }
+    
 }

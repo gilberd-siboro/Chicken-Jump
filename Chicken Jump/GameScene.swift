@@ -42,6 +42,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             score?.text = "\(cornIcon) \(poin)"
         }
     }
+    
+    weak var gameViewController: GameViewController?
 
     
     
@@ -61,16 +63,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
 //        oil?.physicsBody?.affectedByGravity = false
 //        oil?.physicsBody?.categoryBitMask = 1
         
-        chicken?.physicsBody = SKPhysicsBody(rectangleOf: chicken!.size)
+//        chicken?.physicsBody = SKPhysicsBody(rectangleOf: chicken!.size)
 //        chicken?.physicsBody?.friction = 0.0
 //        chicken?.physicsBody?.restitution = 1.0
 //        chicken?.physicsBody?.linearDamping = 0.0
 //        chicken?.physicsBody?.angularDamping = 0.0
-        chicken?.physicsBody?.affectedByGravity = true
-        chicken?.physicsBody?.categoryBitMask = 1
-        chicken?.physicsBody?.collisionBitMask = 2
-        chicken?.physicsBody?.contactTestBitMask = chicken?.physicsBody?.collisionBitMask ?? 0
-        chicken?.physicsBody?.allowsRotation = false
+//        chicken?.physicsBody?.affectedByGravity = true
+//        chicken?.physicsBody?.categoryBitMask = 1
+//        chicken?.physicsBody?.collisionBitMask = 2
+//        chicken?.physicsBody?.contactTestBitMask = chicken?.physicsBody?.collisionBitMask ?? 0
+//        chicken?.physicsBody?.allowsRotation = false
 //        chicken?.physicsBody?.categoryBitMask = ayamCategory
 //        chicken?.physicsBody?.contactTestBitMask = jagungCategory
         oil?.physicsBody?.isDynamic = false
@@ -101,11 +103,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
 //        jagung?.name = "Jagung1"
         
-        obstacles.append(pijakan)
+
         obstacles.append(pijakan)
         obstacles.append(pijakan)
         obstacles.append(obstacle1)
-        obstacles.append(obstacle2)
+//        obstacles.append(obstacle2)
         
         hpLabel  = SKLabelNode(text: "\(hp)")
         hpLabel?.zPosition = 15
@@ -257,49 +259,56 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
 
-    @objc func playPauseButtonTapped(_ sender: UIButton) {
-        if isPausedGame {
-            isPausedGame = false
-            sender.setTitle("Pause", for: .normal)
-            // Implementasi untuk melanjutkan permainan (jika perlu)
-            self.isPaused = false
-            // Hilangkan alert jika ada
-            if let viewController = view?.window?.rootViewController {
-                viewController.dismiss(animated: true, completion: nil)
+    func addPlayPauseButton() {
+            playPauseButton = UIButton(type: .system)
+            playPauseButton.setTitle("Pause", for: .normal)
+            playPauseButton.frame = CGRect(x: 20, y: 20, width: 100, height: 50)
+            playPauseButton.addTarget(self, action: #selector(playPauseButtonTapped(_:)), for: .touchUpInside)
+            view?.addSubview(playPauseButton)
+        }
+        
+        @objc func playPauseButtonTapped(_ sender: UIButton) {
+            if isPausedGame {
+                // Resume game
+                isPausedGame = false
+                sender.setTitle("Pause", for: .normal)
+                self.isPaused = false
+            } else {
+                // Pause game
+                isPausedGame = true
+                sender.setTitle("Play", for: .normal)
+                self.isPaused = true
+                
+                // Optionally, show pause menu or dialog
+                showPauseMenu()
             }
-        } else {
-            isPausedGame = true
-            sender.setTitle("Play", for: .normal)
-            // Implementasi untuk menjeda permainan (jika perlu)
-            self.isPaused = true
-            
-            // Tampilkan alert
+        }
+        
+        func showPauseMenu() {
+            // Implement pause menu or dialog here
             let alertController = UIAlertController(title: "Game Paused", message: nil, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: "Resume", style: .default, handler: { (_) in self.resumeGame()
-            }))
-            alertController.addAction(UIAlertAction(title: "End Game", style: .destructive, handler: { (_) in self.endGame()
-            }))
+            alertController.addAction(UIAlertAction(title: "Resume", style: .default, handler: { (_) in self.resumeGame() }))
+            alertController.addAction(UIAlertAction(title: "End Game", style: .destructive, handler: { (_) in self.endGame() }))
             if let viewController = view?.window?.rootViewController {
                 viewController.present(alertController, animated: true, completion: nil)
             }
         }
-    }
-    
-    // Method untuk melanjutkan permainan
+        
         func resumeGame() {
+            // Resume game logic
             isPausedGame = false
             playPauseButton.setTitle("Pause", for: .normal)
             self.isPaused = false
         }
         
-        // Method untuk mengakhiri permainan
         func endGame() {
-            // Implementasi untuk mengakhiri permainan (misalnya kembali ke menu utama)
-            if let viewController = view?.window?.rootViewController as? MainMenuViewController {
-                viewController.dismiss(animated: true, completion: nil)
-            }
+            // End game logic
+            gameViewController?.endGame()
         }
 
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+    }
     
     func repeatedlySpawnObstacle() {
         let spawnAction = SKAction.run {
@@ -351,7 +360,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
                 spawnChicken()
             }
             
-            moveObstacle1(node: newObstacle)
+            moveObstacle(node: newObstacle)
             
             
             // Store the position of the first spawned obstacle if not already set
@@ -370,8 +379,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         
         if let chicken1 = chicken?.copy() as? SKSpriteNode {
             chicken1.size = CGSize(width: 150, height: 150)
-            chicken1.position =   veryFirstObstacle!.position // CGPoint(x: 270, y: -370)
-            //chicken1.position.y = chicken1.position.y + 200
+            chicken1.position = veryFirstObstacle!.position // CGPoint(x: 270, y: -370)
+            chicken1.position.y = chicken1.position.y + 100
             chicken1.zPosition = 9
 
             chicken1.physicsBody = SKPhysicsBody(rectangleOf: chicken1.size)
@@ -389,7 +398,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
 
-    func moveObstacle1(node: SKNode) {
+    func moveObstacle(node: SKNode) {
         let moveDownAction = SKAction.moveTo(y: -800, duration: 15)
         let removeNodeAction = SKAction.removeFromParent()
         node.run(SKAction.sequence([moveDownAction, removeNodeAction]))
@@ -452,21 +461,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             }
 
             // Cek jika HP habis
-            if hp.isEmpty {
+            if hp.count == 0 {
                 showGameOver()
             }
         }
         if (nodeA.name == "Chicken" && nodeB.name == "Oil") || (nodeA.name == "Oil" && nodeB.name == "Chicken") {
-            // Mengubah tekstur Step2 menjadi "pijakan" sekali saja
+            // Mengubah tekstur Step2 menjadi "pijakan"
             if nodeA.name == "Oil" {
                 print("collision")
             } else if nodeB.name == "Oil" {
                 print("collision")
             }
         }
-        
-
     }
+    
     func handleJagungCollision(jagung: SKNode) {
         jagung.removeFromParent()
         poin += 5
@@ -487,13 +495,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
             view?.presentScene(gameOverScene, transition: transition)
         }
     }
-    
-    
-    
-    
 }
-
-
 
 struct SceneKitView: UIViewRepresentable {
     func makeUIView(context: Context) -> SKView {
@@ -508,4 +510,3 @@ struct SceneKitView: UIViewRepresentable {
     }
 }
 
-// knknjkn
