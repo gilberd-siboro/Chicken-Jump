@@ -21,6 +21,10 @@
 		FDCF25292C2D3FD900538517 /* Chicken_JumpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25282C2D3FD900538517 /* Chicken_JumpTests.swift */; };
 		FDCF25332C2D3FD900538517 /* Chicken_JumpUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25322C2D3FD900538517 /* Chicken_JumpUITests.swift */; };
 		FDCF25352C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDCF25342C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift */; };
+		FDDFC5F22C41111700E594EC /* jagung.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC5F12C41111700E594EC /* jagung.mp3 */; };
+		FDDFC5F42C41111E00E594EC /* jump.mpeg in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC5F32C41111E00E594EC /* jump.mpeg */; };
+		FDDFC5F82C44060C00E594EC /* Lemonada-VariableFont_wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC5F72C44060C00E594EC /* Lemonada-VariableFont_wght.ttf */; };
+		FDDFC5FB2C441F6300E594EC /* Fredoka_Condensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FDDFC5FA2C441F6300E594EC /* Fredoka_Condensed-SemiBold.ttf */; };
 		FF6933322C33FD85006D9914 /* GameOverScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = FF6933312C33FD85006D9914 /* GameOverScene.sks */; };
 		FF6933342C33FDB4006D9914 /* GameOverScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF6933332C33FDB4006D9914 /* GameOverScene.swift */; };
 /* End PBXBuildFile section */
@@ -60,6 +64,11 @@
 		FDCF252E2C2D3FD900538517 /* Chicken JumpUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Chicken JumpUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDCF25322C2D3FD900538517 /* Chicken_JumpUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chicken_JumpUITests.swift; sourceTree = "<group>"; };
 		FDCF25342C2D3FD900538517 /* Chicken_JumpUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chicken_JumpUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		FDDFC5F12C41111700E594EC /* jagung.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = jagung.mp3; sourceTree = "<group>"; };
+		FDDFC5F32C41111E00E594EC /* jump.mpeg */ = {isa = PBXFileReference; lastKnownFileType = video.mpeg; path = jump.mpeg; sourceTree = "<group>"; };
+		FDDFC5F72C44060C00E594EC /* Lemonada-VariableFont_wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lemonada-VariableFont_wght.ttf"; sourceTree = "<group>"; };
+		FDDFC5F92C44077C00E594EC /* Chicken-Jump-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Chicken-Jump-Info.plist"; sourceTree = SOURCE_ROOT; };
+		FDDFC5FA2C441F6300E594EC /* Fredoka_Condensed-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fredoka_Condensed-SemiBold.ttf"; sourceTree = "<group>"; };
 		FF6933312C33FD85006D9914 /* GameOverScene.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GameOverScene.sks; sourceTree = "<group>"; };
 		FF6933332C33FDB4006D9914 /* GameOverScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -112,11 +121,14 @@
 		FDCF250D2C2D3FD900538517 /* Chicken Jump */ = {
 			isa = PBXGroup;
 			children = (
+				FDDFC5F92C44077C00E594EC /* Chicken-Jump-Info.plist */,
 				FDCF250E2C2D3FD900538517 /* AppDelegate.swift */,
 				FDCF25102C2D3FD900538517 /* GameScene.sks */,
 				FDCF25122C2D3FD900538517 /* Actions.sks */,
 				FDCF25142C2D3FD900538517 /* GameScene.swift */,
+				FDDFC5FA2C441F6300E594EC /* Fredoka_Condensed-SemiBold.ttf */,
 				FDCF25162C2D3FD900538517 /* GameViewController.swift */,
+				FDDFC5F72C44060C00E594EC /* Lemonada-VariableFont_wght.ttf */,
 				FDCF25182C2D3FD900538517 /* Main.storyboard */,
 				FDCF251B2C2D3FD900538517 /* Assets.xcassets */,
 				FDCF251D2C2D3FD900538517 /* LaunchScreen.storyboard */,
@@ -125,6 +137,8 @@
 				FF6933312C33FD85006D9914 /* GameOverScene.sks */,
 				FF6933332C33FDB4006D9914 /* GameOverScene.swift */,
 				FDB293742C35513A009D8556 /* Bgmusic.mpeg */,
+				FDDFC5F12C41111700E594EC /* jagung.mp3 */,
+				FDDFC5F32C41111E00E594EC /* jump.mpeg */,
 			);
 			path = "Chicken Jump";
 			sourceTree = "<group>";
@@ -254,8 +268,12 @@
 				FDCF251A2C2D3FD900538517 /* Base in Resources */,
 				FDCF251C2C2D3FD900538517 /* Assets.xcassets in Resources */,
 				FDCF25132C2D3FD900538517 /* Actions.sks in Resources */,
+				FDDFC5F82C44060C00E594EC /* Lemonada-VariableFont_wght.ttf in Resources */,
+				FDDFC5F22C41111700E594EC /* jagung.mp3 in Resources */,
 				FF6933322C33FD85006D9914 /* GameOverScene.sks in Resources */,
+				FDDFC5F42C41111E00E594EC /* jump.mpeg in Resources */,
 				FDCF251F2C2D3FD900538517 /* Base in Resources */,
+				FDDFC5FB2C441F6300E594EC /* Fredoka_Condensed-SemiBold.ttf in Resources */,
 				FDB293752C35513A009D8556 /* Bgmusic.mpeg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -470,6 +488,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HDTJ3S9D2M;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Chicken-Jump-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -497,6 +516,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = HDTJ3S9D2M;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Chicken-Jump-Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;

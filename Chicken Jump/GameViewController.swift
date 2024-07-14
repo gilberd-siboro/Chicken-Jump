@@ -1,39 +1,39 @@
-//
-//  GameViewController.swift
-//  Chicken Jump
-//
-//  Created by Foundation-010 on 27/06/24.
-//
-
 import UIKit
 import SpriteKit
-import GameplayKit
 
 class GameViewController: UIViewController {
-    override func loadView(){
-        self.view = SKView()
+    
+    var skView: SKView!
+    
+    override func loadView() {
+        self.skView = SKView()
+        self.view = skView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         if let view = self.view as! SKView? {
-            // Load the SKScene from 'GameScene.sks'
-            if let scene = SKScene(fileNamed: "GameScene") {
-                // Set the scale mode to scale to fit the window
+            if let scene = GameScene(fileNamed: "GameScene") {
                 scene.scaleMode = .aspectFill
-                
-                // Present the scene
+                scene.gameViewController = self  // Set reference to GameViewController
                 view.presentScene(scene)
             }
-            
-            view.ignoresSiblingOrder = true
-//            view.showsPhysics = true
-            view.showsFPS = true
-            view.showsNodeCount = true
         }
+        
+        skView.ignoresSiblingOrder = true
+        skView.showsFPS = true
+        skView.showsNodeCount = true
     }
-
+    
+    func endGame() {
+        NotificationCenter.default.post(name: Notification.Name("BackToMainMenu"), object: nil)
+    }
+    
+    @IBAction func endGameButtonTapped(_ sender: UIButton) {
+        endGame()
+    }
+    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
@@ -41,7 +41,7 @@ class GameViewController: UIViewController {
             return .all
         }
     }
-
+    
     override var prefersStatusBarHidden: Bool {
         return true
     }
