@@ -332,7 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
         // Implement pause menu or dialog here
         let alertController = UIAlertController(title: "Game Paused", message: nil, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Resume", style: .default, handler: { (_) in self.resumeGame() }))
-        alertController.addAction(UIAlertAction(title: "End Game", style: .destructive, handler: { (_) in self.endGame() }))
+//        alertController.addAction(UIAlertAction(title: "End Game", style: .destructive, handler: { (_) in self.endGame() }))
         if let viewController = view?.window?.rootViewController {
             viewController.present(alertController, animated: true, completion: nil)
         }
@@ -341,21 +341,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     
     func resumeGame() {
         // Resume game logic
+        startTime = CACurrentMediaTime()
+        repeatedlySpawnObstacle()
         isPausedGame = false
         playPauseButton.setImage(UIImage(named: "pause"), for: .normal)
         self.isPaused = false
     }
     
-    func endGame() {
-        // End game logic
-        gameViewController?.endGame()
-    }
+//    func endGame() {
+//        // End game logic
+//        gameViewController?.endGame()
+//    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
     }
     
     func repeatedlySpawnObstacle() {
-        guard let startTime = startTime else { return }  // Memastikan startTime tidak nil
+        guard let startTime = startTime, !isPausedGame else { return }  // Memastikan startTime tidak nil dan game tidak ter-pause
 
         // Menghitung waktu yang telah berlalu sejak startTime
         let elapsedTime = CACurrentMediaTime() - startTime

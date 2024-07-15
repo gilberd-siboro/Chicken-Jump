@@ -26,14 +26,14 @@ class GameViewController: UIViewController {
         skView.showsNodeCount = true
     }
     
-    func endGame() {
-        NotificationCenter.default.post(name: Notification.Name("BackToMainMenu"), object: nil)
-    }
-    
-    @IBAction func endGameButtonTapped(_ sender: UIButton) {
-        endGame()
-    }
-    
+//    func endGame() {
+//        NotificationCenter.default.post(name: Notification.Name("BackToMainMenu"), object: nil)
+//    }
+//    
+//    @IBAction func endGameButtonTapped(_ sender: UIButton) {
+//        endGame()
+//    }
+//    
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         if UIDevice.current.userInterfaceIdiom == .phone {
             return .allButUpsideDown
