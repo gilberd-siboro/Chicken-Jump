@@ -14,6 +14,7 @@ import SwiftUI
 class GameScene: SKScene, SKPhysicsContactDelegate{
     
     var pijakan: SKSpriteNode?
+    var isGestureRunning = false
     var obstacle1: SKSpriteNode?
     var obstacle2: SKSpriteNode?
     var veryFirstObstacle: SKSpriteNode?
@@ -124,117 +125,107 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     }
     
     @objc func swipeRight() {
-        print("swipeRight")
-        
-        // jump to right
-        guard let chicken = actionChicken else { return }
-        chicken.physicsBody = nil
-        
-        
-        // Create a path for the jump
-        chicken.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addQuadCurve(to: CGPoint(x: 300, y: 150), controlPoint: CGPoint(x: 0, y: 100))
-        
-        
-        let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 500)
-        move.timingMode = .easeInEaseOut
-        
-//        let wait  = SKAction.wait(forDuration: 0.1)
-        let activatePhysics = SKAction.run {
-            chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
-            chicken.physicsBody?.isDynamic = true
-            chicken.physicsBody?.allowsRotation = false
-            chicken.physicsBody?.affectedByGravity = true
-            chicken.physicsBody?.categoryBitMask = self.ayamCategory
-            chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
-            chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
+            // Cek apakah ada gesture yang sedang berjalan
+            guard !isGestureRunning else { return }
+            isGestureRunning = true
+            
+            guard let chicken = actionChicken else { return }
+            chicken.physicsBody = nil
+            
+            chicken.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addQuadCurve(to: CGPoint(x: 300, y: 150), controlPoint: CGPoint(x: 0, y: 100))
+            
+            let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 500)
+            move.timingMode = .easeInEaseOut
+            
+            let activatePhysics = SKAction.run {
+                chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
+                chicken.physicsBody?.isDynamic = true
+                chicken.physicsBody?.allowsRotation = false
+                chicken.physicsBody?.affectedByGravity = true
+                chicken.physicsBody?.categoryBitMask = self.ayamCategory
+                chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
+                chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
+            }
+            
+            // Reset flag setelah aksi selesai
+            let resetFlag = SKAction.run {
+                self.isGestureRunning = false
+            }
+            
+            chicken.run(SKAction.sequence([jumpSound, move, activatePhysics, resetFlag]))
         }
-        
-        chicken.run(SKAction.sequence([jumpSound, move, activatePhysics]))
-        
-        
-    }
-    
-    @objc func swipeLeft() {
-        guard let chicken = actionChicken else { return }
-        chicken.physicsBody = nil
-        
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addQuadCurve(to: CGPoint(x: -300, y: 200), controlPoint: CGPoint(x: 0, y: 100))
-        
-        
-        let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 500)
-        move.timingMode = .easeInEaseOut
-        
-        
-        // Create an SKAction to activate physics on the chicken node
-        let activatePhysics = SKAction.run {
-            // Create a physics body for the chicken node with a rectangle shape of the chicken's size
-            chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
-            
-            // Set the physics body to be dynamic, so it will be affected by physics simulation
-            chicken.physicsBody?.isDynamic = true
-            
-            // Prevent the physics body from rotating
-            chicken.physicsBody?.allowsRotation = false
-            
-            // Enable gravity to affect the chicken node
-            chicken.physicsBody?.affectedByGravity = true
-            
-            // Set the category bit mask to identify the chicken node's physics body
-            chicken.physicsBody?.categoryBitMask = self.ayamCategory
-            
-            // Define which categories the chicken's physics body can collide with
-            chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
-            
-            // Define which categories the chicken's physics body should notify when it makes contact
-            chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
-        }
-        
-        chicken.run(SKAction.sequence([jumpSound, move, activatePhysics]))
-        
 
-    }
-    
-    @objc func swipeUp(){
-//        print("swipeRight")
-        
-        // jump to right
-        guard let chicken = actionChicken else { return }
-        chicken.physicsBody = nil
-        
-        
-        // Create a path for the jump
-        chicken.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        
-        let path = UIBezierPath()
-        path.move(to: CGPoint(x: 0, y: 0))
-        path.addQuadCurve(to: CGPoint(x: 0, y: 500), controlPoint: CGPoint(x: 0, y: 0))
-        
-        
-        let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 700)
-        move.timingMode = .easeInEaseOut
-        
-//        let wait  = SKAction.wait(forDuration: 0.1)
-        let activatePhysics = SKAction.run {
-            chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
-            chicken.physicsBody?.isDynamic = true
-            chicken.physicsBody?.allowsRotation = false
-            chicken.physicsBody?.affectedByGravity = true
-            chicken.physicsBody?.categoryBitMask = self.ayamCategory
-            chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
-            chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
+        @objc func swipeLeft() {
+            // Cek apakah ada gesture yang sedang berjalan
+            guard !isGestureRunning else { return }
+            isGestureRunning = true
+            
+            guard let chicken = actionChicken else { return }
+            chicken.physicsBody = nil
+            
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addQuadCurve(to: CGPoint(x: -300, y: 200), controlPoint: CGPoint(x: 0, y: 100))
+            
+            let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 500)
+            move.timingMode = .easeInEaseOut
+            
+            let activatePhysics = SKAction.run {
+                chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
+                chicken.physicsBody?.isDynamic = true
+                chicken.physicsBody?.allowsRotation = false
+                chicken.physicsBody?.affectedByGravity = true
+                chicken.physicsBody?.categoryBitMask = self.ayamCategory
+                chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
+                chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
+            }
+            
+            // Reset flag setelah aksi selesai
+            let resetFlag = SKAction.run {
+                self.isGestureRunning = false
+            }
+            
+            chicken.run(SKAction.sequence([jumpSound, move, activatePhysics, resetFlag]))
         }
-        
-        chicken.run(SKAction.sequence([jumpSound, move, activatePhysics]))
-        
-        
-    }
+
+        @objc func swipeUp() {
+            // Cek apakah ada gesture yang sedang berjalan
+            guard !isGestureRunning else { return }
+            isGestureRunning = true
+            
+            guard let chicken = actionChicken else { return }
+            chicken.physicsBody = nil
+            
+            chicken.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+            
+            let path = UIBezierPath()
+            path.move(to: CGPoint(x: 0, y: 0))
+            path.addQuadCurve(to: CGPoint(x: 0, y: 500), controlPoint: CGPoint(x: 0, y: 0))
+            
+            let move = SKAction.follow(path.cgPath, asOffset: true, orientToPath: false, speed: 700)
+            move.timingMode = .easeInEaseOut
+            
+            let activatePhysics = SKAction.run {
+                chicken.physicsBody = SKPhysicsBody(rectangleOf: chicken.size)
+                chicken.physicsBody?.isDynamic = true
+                chicken.physicsBody?.allowsRotation = false
+                chicken.physicsBody?.affectedByGravity = true
+                chicken.physicsBody?.categoryBitMask = self.ayamCategory
+                chicken.physicsBody?.collisionBitMask = self.stepCategory | self.obstacleCategory
+                chicken.physicsBody?.contactTestBitMask = self.jagungCategory | self.stepCategory | self.obstacleCategory
+            }
+            
+            // Reset flag setelah aksi selesai
+            let resetFlag = SKAction.run {
+                self.isGestureRunning = false
+            }
+            
+            chicken.run(SKAction.sequence([jumpSound, move, activatePhysics, resetFlag]))
+        }
     
     enum Direction {
         case left
@@ -388,51 +379,75 @@ class GameScene: SKScene, SKPhysicsContactDelegate{
     var firstObstaclePosition: CGPoint?
     
     func spawnObstacles() {
-        var randomObstacle = obstacles.randomElement() ?? obstacle1
-            
-        while (obstacle1Exist == true) {
-            randomObstacle = obstacles.randomElement() ?? obstacle1
-            
-            if randomObstacle != obstacle1 {
-                obstacle1Exist = false
-            }
-        }
+            var randomObstacle: SKSpriteNode?
 
-        if let newObstacle = randomObstacle?.copy() as? SKSpriteNode {
-            // Alternate the X position to avoid overlap
-            if lastXPositionOfObstacle == 150 {
-                lastXPositionOfObstacle = -150
-            } else {
-                lastXPositionOfObstacle = 150
-            }
-
-            // Ensure the first obstacle is far enough from the chicken's initial position
-            newObstacle.position = CGPoint(x: lastXPositionOfObstacle, y: 1000)
-            newObstacle.physicsBody = SKPhysicsBody(rectangleOf: newObstacle.size)
-            newObstacle.physicsBody?.isDynamic = false
-            newObstacle.physicsBody?.affectedByGravity = false
-            newObstacle.physicsBody?.allowsRotation = false
-            newObstacle.physicsBody?.restitution = 0.0
-            
-            addChild(newObstacle)
-            
+            // Ensure the first obstacle is "pijakan"
             if veryFirstObstacle == nil {
-                veryFirstObstacle = newObstacle.copy() as? SKSpriteNode
-                spawnChicken()
-            }
-            
-            moveObstacle(node: newObstacle)
+                randomObstacle = pijakan!.copy() as? SKSpriteNode
+                veryFirstObstacle = randomObstacle
+                
+                if let newObstacle = randomObstacle {
+                    // Alternate the X position to avoid overlap
+                    if lastXPositionOfObstacle == 150 {
+                        lastXPositionOfObstacle = -150
+                    } else {
+                        lastXPositionOfObstacle = 150
+                    }
 
-            // Store the position of the first spawned obstacle if not already set
-            if firstObstaclePosition == nil {
-                firstObstaclePosition = newObstacle.position
+                    // Ensure the first obstacle is far enough from the chicken's initial position
+                    newObstacle.position = CGPoint(x: lastXPositionOfObstacle, y: 1000)
+                    newObstacle.physicsBody = SKPhysicsBody(rectangleOf: newObstacle.size)
+                    newObstacle.physicsBody?.isDynamic = false
+                    newObstacle.physicsBody?.affectedByGravity = false
+                    newObstacle.physicsBody?.allowsRotation = false
+                    newObstacle.physicsBody?.restitution = 0.0
+                    
+                    addChild(newObstacle)
+
+                    moveObstacle(node: newObstacle)
+
+                    // Spawn the chicken on the first obstacle
+                    spawnChicken()
+                }
+            } else {
+                // Pick a random obstacle
+                randomObstacle = obstacles.randomElement() ?? obstacle1
+
+                while obstacle1Exist {
+                    randomObstacle = obstacles.randomElement() ?? obstacle1
+                    
+                    if randomObstacle != obstacle1 {
+                        obstacle1Exist = false
+                    }
+                }
+
+                if let newObstacle = randomObstacle?.copy() as? SKSpriteNode {
+                    // Alternate the X position to avoid overlap
+                    if lastXPositionOfObstacle == 150 {
+                        lastXPositionOfObstacle = -150
+                    } else {
+                        lastXPositionOfObstacle = 150
+                    }
+
+                    // Ensure the first obstacle is far enough from the chicken's initial position
+                    newObstacle.position = CGPoint(x: lastXPositionOfObstacle, y: 1000)
+                    newObstacle.physicsBody = SKPhysicsBody(rectangleOf: newObstacle.size)
+                    newObstacle.physicsBody?.isDynamic = false
+                    newObstacle.physicsBody?.affectedByGravity = false
+                    newObstacle.physicsBody?.allowsRotation = false
+                    newObstacle.physicsBody?.restitution = 0.0
+                    
+                    addChild(newObstacle)
+
+                    moveObstacle(node: newObstacle)
+                }
+
+                if randomObstacle == obstacle1 {
+                    obstacle1Exist = true
+                }
             }
         }
-
-        if randomObstacle == obstacle1 {
-            obstacle1Exist = true
-        }
-    }
+    
     func spawnChicken() {
         
         

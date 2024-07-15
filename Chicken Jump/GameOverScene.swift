@@ -68,7 +68,7 @@ class GameOverScene: SKScene {
     func playAgain() {
         if let scene = SKScene(fileNamed: "GameScene") {
             scene.scaleMode = .aspectFill
-            let transition = SKTransition.flipHorizontal(withDuration: 1)
+            let transition = SKTransition.push(with: .left, duration: 1)
             view?.presentScene(scene, transition: transition)
         }
     }
